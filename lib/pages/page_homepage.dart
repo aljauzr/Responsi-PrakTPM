@@ -14,100 +14,103 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
-          children: [
-            SizedBox(height: 20),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Transform.scale(
-                  scale: 0.7,
-                  child: Image.network(
-                    "https://cdn.cnnindonesia.com/cnnid/images/logo_cnn_fav.png",
-                    fit: BoxFit.contain,
+        children: [
+          SizedBox(height: 20),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Transform.scale(
+                scale: 0.7,
+                child: Image.network(
+                  "https://cdn.cnnindonesia.com/cnnid/images/logo_cnn_fav.png",
+                  fit: BoxFit.contain,
+                ),
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width / 4,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NewsListPage(category: 'terbaru'),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.red, // Set button color to red
+                      ),
+                      child: Text("TERBARU"),
+                    ),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width / 4,
-                      child: ElevatedButton(
-                          onPressed: () async {
-                            await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => NewsListPage(category: 'terbaru'),
-                                )
-                            );
-                          },
-                          child: Text("Terbaru")
+                  SizedBox(width: 10), // Add a smaller gap between the buttons
+                  Container(
+                    width: MediaQuery.of(context).size.width / 4,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NewsListPage(category: 'nasional'),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.red, // Set button color to red
                       ),
+                      child: Text("NASIONAL"),
                     ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width / 4,
-                      child: ElevatedButton(
-                          onPressed: () async {
-                            await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => NewsListPage(category: 'nasional'),
-                                )
-                            );
-                          },
-                          child: Text("Nasional")
+                  ),
+                ],
+              ),
+              SizedBox(height: 10), // Add a smaller gap between the rows
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width / 4,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NewsListPage(category: 'olahraga'),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.red, // Set button color to red
                       ),
+                      child: Text("OLAHRAGA"),
                     ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width / 4,
-                      child: ElevatedButton(
-                          onPressed: () async {
-                            await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => NewsListPage(category: 'olahraga'),
-                                )
-                            );
-                          },
-                          child: Text("Olahraga")
+                  ),
+                  SizedBox(width: 10), // Add a smaller gap between the buttons
+                  Container(
+                    width: MediaQuery.of(context).size.width / 4,
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => NewsListPage(category: 'teknologi'),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.red, // Set button color to red
                       ),
+                      child: Text("TEKNOLOGI"),
                     ),
-                  ],
-                ),
-                SizedBox(height: 20),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width / 4,
-                      child: ElevatedButton(
-                          onPressed: () async {
-                            await Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => NewsListPage(category: 'teknologi'),
-                                )
-                            );
-                          },
-                          child: Text("Teknologi")
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ]
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

@@ -12,57 +12,78 @@ class NewsListPage extends StatefulWidget {
 }
 
 class _NewsListPageState extends State<NewsListPage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: Colors.red,
         title: Text(
             "CNN ${widget.category.toUpperCase()}"
         ),
       ),
       body: Container(
-          child: FutureBuilder(
-            future: NewsApi().getCategoryList(widget.category),
-            builder: (context, AsyncSnapshot snapshot) {
-              if (snapshot.data == null) {
-                return Container(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                );
-              } else if (!snapshot.hasData) {
-                return Container(
-                  child: Center(
-                    child: Text("Tidak ada data"),
-                  ),
-                );
-              } else {
-                return ListView.builder(
-                  itemCount: snapshot.data.data.posts.length,
-                  itemBuilder: (context, index) {
-                    final Posts post = snapshot.data.data.posts.length[index];
-                    return Card(
-                      child: ListTile(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => NewsDetailPage(category: widget.category, post: post),
-                              ));
-                        },
-                        leading: Image.network(
-                          snapshot.data.data.posts.thumbnail,
-                          errorBuilder: (context, error, stackTrace) =>
-                          const Icon(Icons.error),
-                        ),
-                        title: Text(snapshot.data[index].toUpperCase()),
-                      ),
-                    );
-                  },
-                );
-              }
+        child: FutureBuilder(
+          future: NewsApi.getCategoryList(widget.category),
+          builder: (
+              BuildContext context,
+              AsyncSnapshot<dynamic> snapshot,
+              ) {
+            if (snapshot.hasError) {
+              return _buildErrorSection();
+            }
+            if (snapshot.hasData) {
+              NewsCategoryModel newsCategoryModel = NewsCategoryModel.fromJson(snapshot.data);
+              return _buildSuccessSection(newsCategoryModel);
+            }
+            return _buildLoadingSection();
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _buildErrorSection() {
+    return Text("Error");
+  }
+
+  Widget _buildLoadingSection() {
+    return Center(
+      child: CircularProgressIndicator(),
+    );
+  }
+
+  Widget _buildSuccessSection(NewsCategoryModel data) {
+    List<Posts> filteredList = data.data!.posts!.toList();
+
+    return ListView.builder(
+      itemCount: filteredList.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Card(
+          child: ListTile(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        NewsDetailPage(post: filteredList![index]),
+                  )
+              );
             },
-          )),
+            leading: Image.network(
+              filteredList[index].thumbnail!,
+              fit: BoxFit.cover,
+            ),
+            title: Text(
+              filteredList[index].title!,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
